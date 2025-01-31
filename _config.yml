@@ -16,7 +16,7 @@ timezone:
 
 title: Simone Aiello # the main title
 
-tagline: Personal blog for CTF writeups and pentesting related notes # it will display as the sub-title
+tagline: OSCP | Penetration tester | CTF Player # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   CTF, writeup, hackthebox.
@@ -98,7 +98,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://media.licdn.com/dms/image/D4D03AQGaqK-gLZZ-qQ/profile-displayphoto-shrink_200_200/0/1669816517176?e=1726704000&v=beta&t=wd7YXf0pj2glwxuj26OHld5jDM1hOxPjIR7HD7NCHME
+avatar: https://media.licdn.com/dms/image/v2/D4D03AQGaqK-gLZZ-qQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1669816517176?e=1743638400&v=beta&t=wIWb8FoJ-vc2JdqY05S_pLyjPcJqAJitX6Uxq4_c2nE
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
