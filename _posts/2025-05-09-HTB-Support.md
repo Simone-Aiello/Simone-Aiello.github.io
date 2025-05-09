@@ -1,10 +1,10 @@
-
 ---
 title : "[HTB] Windows Machine: Support"
 date: 2025-05-09 00:00:00 +0800
 tags: [ad,htb, practice, rcbd, dcsync]
 categories: [ad,htb, practice, rcbd, dcsync]
 ---
+
 # Enumeration
 
 ## Port scan
