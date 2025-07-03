@@ -354,12 +354,11 @@ We can notice that we have the permission to enable xp_cmdshell, and therefore o
 ## From sql_svc to ryan
 
 Exploring the filesystem using the sql_svc account, under the path:
-
-We have a config file that reveals the credentials of the sql_svc user:
-
 ```text
 C:\SQL2019\ExpressAdv_ENU
 ```
+
+We have a config file that reveals the credentials of the sql_svc user:
 
 ![](/assets/EscapeTwo/EscapeTwo-sqlsvccreds.png)
 
